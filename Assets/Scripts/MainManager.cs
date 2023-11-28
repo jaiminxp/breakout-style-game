@@ -12,6 +12,7 @@ public class MainManager : MonoBehaviour
 
     public Text ScoreText;
     public Text NameText;
+    public Text highScoreText;
     public GameObject GameOverText;
 
     private bool m_Started = false;
@@ -41,7 +42,17 @@ public class MainManager : MonoBehaviour
         if (GameManager.Instance != null)
         {
             NameText.text = "Name: " + GameManager.Instance.playerName;
+
+            if (GameManager.Instance.highScore != null)
+            {
+                UpdateHighScoreText();
+            }
         }
+    }
+
+    void UpdateHighScoreText()
+    {
+        highScoreText.text = "Best Score: " + GameManager.Instance.highScore.name + " : " + GameManager.Instance.highScore.points;
     }
 
     private void Update()
@@ -78,5 +89,11 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+
+        if (GameManager.Instance.highScore == null || m_Points > GameManager.Instance.highScore.points)
+        {
+            GameManager.Instance.SaveHighScore(m_Points);
+            UpdateHighScoreText();
+        }
     }
 }

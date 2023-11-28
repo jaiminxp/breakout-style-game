@@ -11,6 +11,15 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public TMP_InputField playerNameInput;
+    public TextMeshProUGUI highScoreText;
+
+    void Start()
+    {
+        if (GameManager.Instance.highScore != null)
+        {
+            highScoreText.text = highScoreText.text = "Best Score: " + GameManager.Instance.highScore.name + " : " + GameManager.Instance.highScore.points;
+        }
+    }
 
     public void StartGame()
     {
